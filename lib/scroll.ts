@@ -8,6 +8,8 @@ export const sceneState = {
   progress: 0,
   /** Camera position along the keyframe path, 0 → 6 (see cameraPath.ts) */
   cam: 0,
+  /** Reduced motion only: the keyframe currently shown. Changes behind a fade (useShotFades). */
+  shot: 0,
   /** 0–1 slow orbit while inside the workspace (pricing → FAQ) */
   orbit: 0,
   /** normalised pointer, -1…1 */

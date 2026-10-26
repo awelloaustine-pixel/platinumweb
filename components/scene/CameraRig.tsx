@@ -32,7 +32,8 @@ export function CameraRig({ parallax }: { parallax: boolean }) {
 
   useFrame(({ clock, camera }, dt) => {
     const still = sceneState.reducedMotion;
-    const cam = still ? Math.round(sceneState.cam) : sceneState.cam;
+    // Reduced motion: hold the committed shot; it only changes behind a fade
+    const cam = still ? sceneState.shot : sceneState.cam;
     const t = Math.min(1, Math.max(0, cam / LAST_KEY));
 
     posCurve.getPoint(t, goal);

@@ -2,9 +2,10 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Component, type ReactNode, useEffect, useState } from "react";
+import { Component, type ReactNode, useEffect, useRef, useState } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import { sceneState, type Quality } from "@/lib/scroll";
+import { useShotFades } from "./useShotFades";
 
 // three.js is only downloaded once this mounts on the client, after first paint.
 const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false });
@@ -53,6 +54,8 @@ type Mode = { kind: "3d"; quality: Quality; reduced: boolean } | { kind: "static
 export function SceneMount() {
   const [mode, setMode] = useState<Mode | null>(null);
   const [ready, setReady] = useState(false);
+  const fadeRef = useRef<HTMLDivElement>(null);
+  useShotFades(fadeRef, mode?.kind === "3d" && mode.reduced);
 
   useEffect(() => {
     const reduced = prefersReducedMotion();
@@ -113,6 +116,8 @@ export function SceneMount() {
           <SceneCanvas quality={mode.quality} reduced={mode.reduced} onReady={() => setReady(true)} />
         </SceneErrorBoundary>
       )}
+      {/* Reduced motion: shot changes happen behind a quick fade to --bg (useShotFades) */}
+      {mode?.kind === "3d" && mode.reduced && <div ref={fadeRef} className="absolute inset-0 bg-bg opacity-0" />}
       {mode?.kind === "static" && (
         <Image
           src="/street-fallback.svg"
