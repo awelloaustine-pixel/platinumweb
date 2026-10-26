@@ -116,14 +116,13 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* .force-motion is a dev-only override (?motion), see lib/motion.ts */
-@media (prefers-reduced-motion: reduce) {
-  :root:not(.force-motion) *,
-  :root:not(.force-motion) *::before,
-  :root:not(.force-motion) *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Only applied when lib/motion.ts honours the OS reduced-motion setting
+   (RESPECT_REDUCED_MOTION = true); it sets this class. */
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }

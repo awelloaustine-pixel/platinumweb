@@ -28,13 +28,12 @@ The scene plan and camera notes are in `docs/scene-plan.md`.
 
 ### Dev-only URL switches (ignored in production)
 
-- `?motion`: force full motion even if your OS has animations turned off (reduced motion).
 - `?static`: force the static wireframe fallback instead of WebGL.
 - In the browser console: `__scene` (scene state, e.g. `__scene.heroLit = 1`), `__st` (ScrollTrigger), `__three()` (R3F state).
 
 ## How it degrades
 
-- **Reduced motion** (OS setting): no smooth scroll, reveals, scrambles or streaks; the camera holds one framed shot per section and only renders when the shot changes.
+- **Reduced motion** (OS setting): **not honoured by choice**; every visitor gets the full fly-through. To honour it, set `RESPECT_REDUCED_MOTION = true` in `lib/motion.ts`: reduced-motion visitors then get no smooth scroll, reveals, scrambles or streaks, and the camera holds one framed shot per section, changing behind a short fade.
 - **Phones / touch**: lighter scene (shorter street, no bloom or parallax), and it only loads after the first scroll/touch, so it never costs page-load time.
 - **No WebGL, ≤2 CPU cores, ≤2 GB memory, data-saver, or a WebGL crash**: `public/street-fallback.svg`, a projection of the same 3D geometry.
 - All copy is real HTML, fully readable without JavaScript.

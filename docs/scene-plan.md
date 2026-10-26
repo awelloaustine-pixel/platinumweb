@@ -55,6 +55,6 @@ lib/scroll.ts       – tiny mutable store (progress, section, lit levels); no R
 ## Fallbacks and performance
 
 - **Mobile (<768px or coarse pointer):** about half the buildings, no skyline detail, no parallax, no post-processing.
-- **`prefers-reduced-motion`:** the camera doesn't fly. Each section cross-fades to a static framed shot; no scramble/split animations.
+- **Reduced motion:** currently *not* honoured (owner's choice): everyone gets the fly-through. Flip `RESPECT_REDUCED_MOTION` in `lib/motion.ts` to switch to static shots that change behind a fade, with no scramble/split animations.
 - **No WebGL / low-power** (`navigator.hardwareConcurrency <= 2` or `deviceMemory <= 2`): a static wireframe SVG of the street.
 - **Hero is HTML-first:** a gradient + SVG poster renders instantly, and the canvas fades in once ready.

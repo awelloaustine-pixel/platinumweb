@@ -11,7 +11,7 @@ const nextFrame = () => new Promise((r) => requestAnimationFrame(() => requestAn
  * each cut behind a short fade to --bg (no movement, so it stays motion-safe).
  *
  * Uses the Web Animations API rather than a CSS transition, because the global
- * prefers-reduced-motion rule in globals.css zeroes every CSS transition.
+ * :root.reduce-motion rule in globals.css zeroes every CSS transition.
  */
 export function useShotFades(overlay: RefObject<HTMLDivElement | null>, active: boolean) {
   useEffect(() => {

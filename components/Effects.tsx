@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 /**
  * DOM-side effects layered on the server-rendered markup. Everything starts in its
  * final, readable state; effects only alter it once JS is running, and none run
- * under prefers-reduced-motion.
+ * when reduced motion is honoured (see lib/motion.ts).
  *  - [data-split]  headings: words rise out of their masks
  *  - [data-fill]   paragraphs: words fill grey → white with scroll
  *  - [data-count]  stats: count up from 0

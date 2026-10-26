@@ -10,7 +10,7 @@ type Props = { text: string; className?: string; duration?: number };
 /**
  * Renders `text`, and the first time it scrolls into view, scrambles through random
  * glyphs before resolving left to right. Server-renders the real word (no flash, fully
- * readable without JS); skipped entirely under prefers-reduced-motion.
+ * readable without JS); skipped when reduced motion is honoured (lib/motion.ts).
  */
 export function ScrambleText({ text, className, duration = 1100 }: Props) {
   const [display, setDisplay] = useState(text);
