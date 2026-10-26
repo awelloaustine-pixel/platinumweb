@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* Brand tokens — names and values match the live site exactly. */
+:root {
+  --bg: #020617;
+  --surface: #0a0f1e;
+  --card: #0f1729;
+  --accent: #d4af37;
+  --accent2: #f59e0b;
+  --text: #f8fafc;
+  --muted: #64748b;
+  /* Lighter muted for small body text: #64748b on --bg is ~4.2:1 (fails WCAG AA),
+     #94a3b8 is ~7.8:1. Use --muted for decorative/large text only. */
+  --muted-light: #94a3b8;
+  --border: #d4af371f;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-border: var(--border);
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-dm-mono);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+@keyframes ring {
+  0%, 100% { transform: rotate(0); }
+  10%, 30% { transform: rotate(-12deg); }
+  20%, 40% { transform: rotate(12deg); }
+  50% { transform: rotate(0); }
+}
+
+/* Word masks for split-text reveals (see components/ui/SplitWords.tsx).
+   Padding/negative margin stops descenders being clipped by the mask. */
+.split-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.split-i {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Hero headline: words rise on first paint, pure CSS so it never waits on JS */
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Kept short: the hero headline is the page's LCP element, so its last word
+   finishing is when the page counts as loaded. */
+.hero-rise .split-i {
+  animation: rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 60ms + 50ms);
+}
+.hero-fade {
+  animation: fade-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--d, 600ms);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.55); }
+  70% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* .force-motion is a dev-only override (?motion), see lib/motion.ts */
+@media (prefers-reduced-motion: reduce) {
+  :root:not(.force-motion) *,
+  :root:not(.force-motion) *::before,
+  :root:not(.force-motion) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
