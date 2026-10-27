@@ -45,7 +45,16 @@ The scene plan and camera notes are in `docs/scene-plan.md`.
 - [ ] Have `lib/legal.ts` reviewed and fill in every `[TODO: …]` (they show on the page until you do).
 - [ ] Optional: replace the mock browser window in `components/sections/CaseStudy.tsx` with a real screenshot of the Bristol Spark site.
 
-## Deploy to Vercel
+## Repositories and deploys (current setup)
+
+- **Vercel deploys from** `helloplatinummarketing-png/platinumweb` (private). Every push to its `main` builds and publishes https://platinumweb.vercel.app automatically (Vercel team **platinum**, project `platinumweb`).
+- `awelloaustine-pixel/platinumweb` (public) holds the same history. In this folder the remotes are `vercel-copy` (deploys) and `origin`. Push to both to keep them in sync:
+  ```bash
+  git push vercel-copy main && git push origin main
+  ```
+- `platinummarketingagency.co.uk` is still on the old site in the **Platinum marketing** team; moving it is the last step to go live (see below).
+
+## Deploy to Vercel (original first-time steps)
 
 1. **Put the code on GitHub.** In `platinum-site/`:
    ```bash
